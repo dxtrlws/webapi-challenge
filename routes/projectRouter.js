@@ -22,6 +22,15 @@ router.get('/:id', async (req, res) => {
     }
 })
 
+router.post('/', async (req, res) => {
+    try{
+        const project = await dbProjects.insert(req.body)
+        res.status(201).json(project)
+    }catch(err) {
+        res.status(500).json({ error: 'Unable to process request' });
+    }
+})
+
 // Middleware
 
 // async function validaiteAction (req, res, next) {
