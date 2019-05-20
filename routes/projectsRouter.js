@@ -1,6 +1,5 @@
 const express = require('express');
 const dbProjects = require('../data/helpers/projectModel');
-const dbActions = require('../data/helpers/actionModel');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -63,14 +62,5 @@ router.put('/:id', async (req, res) => {
 
 // Middleware
 
-// async function validaiteAction (req, res, next) {
-//     try{
-//         const { id } = req.params
-//         const action = await dbActions.insert(id)
-//         if(action.length) {
-//             req.ac
-//         }
-//     }
-// }
 
 module.exports = router;
