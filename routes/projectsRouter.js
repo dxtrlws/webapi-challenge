@@ -1,5 +1,6 @@
 const express = require('express');
 const dbProjects = require('../data/helpers/projectModel');
+const dbActions = require('../data/helpers/actionModel');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -29,6 +30,15 @@ router.post('/', async (req, res) => {
     res.status(500).json({ error: 'Unable to process request' });
   }
 });
+
+router.post('/:id/actions', validiateId, async (req, res) => {
+  try{
+    const action = await dbActions.insert(req.body)
+    res.status(201).json(action)
+  }catch(err) {
+    res.status(500).json({ error: 'Unable to process request' });
+  }
+})
 
 router.get('/:id/actions', async (req, res) => {
   try {
@@ -61,6 +71,20 @@ router.put('/:id', async (req, res) => {
 });
 
 // Middleware
+async function validiateId(req, res, next) {
+  try {
+    const { id } = req.params;
+    const action = await dbProjects.getProjectActions(id);
+    if (action.length > 0) {
+      next();
+    } else {
+      res.status(400).json({ error: 'Invalid actions ID' });
+    }
+  } catch (err) {
+    res.status(500).json({ error: 'Unable to process request' });
+  }
+}
+
 
 
 module.exports = router;
