@@ -32,14 +32,24 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/:id/actions', async (req, res) => {
-    try {
-        const { id } = req.params
-        const actions = await dbProjects.getProjectActions(id);
-        res.status(200).json(actions);
-    }catch(err) {
-        res.status(500).json({ error: 'Unable to process request' });
-    }
-})
+  try {
+    const { id } = req.params;
+    const actions = await dbProjects.getProjectActions(id);
+    res.status(200).json(actions);
+  } catch (err) {
+    res.status(500).json({ error: 'Unable to process request' });
+  }
+});
+
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const project = await dbProjects.remove(id);
+    res.status(200).json(project);
+  } catch (err) {
+    res.status(500).json({ error: 'Unable to process request' });
+  }
+});
 
 // Middleware
 
