@@ -12,6 +12,16 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/:id', async (req, res) => {
+    try{
+        const { id } = req.params;
+        const project = await dbProjects.get(id)
+        res.status(200).json(project)
+    }catch(err) {
+        res.status(500).json({ error: 'Unable to process request' });
+    }
+})
+
 // Middleware
 
 // async function validaiteAction (req, res, next) {
