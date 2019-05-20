@@ -1,6 +1,6 @@
 const express = require('express');
 const dbProjects = require('../data/helpers/projectModel');
-const dbActions = require('../data/helpers/actionModel')
+const dbActions = require('../data/helpers/actionModel');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -13,19 +13,29 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-    try{
-        const { id } = req.params;
-        const project = await dbProjects.get(id)
-        res.status(200).json(project)
-    }catch(err) {
-        res.status(500).json({ error: 'Unable to process request' });
-    }
-})
+  try {
+    const { id } = req.params;
+    const project = await dbProjects.get(id);
+    res.status(200).json(project);
+  } catch (err) {
+    res.status(500).json({ error: 'Unable to process request' });
+  }
+});
 
 router.post('/', async (req, res) => {
-    try{
-        const project = await dbProjects.insert(req.body)
-        res.status(201).json(project)
+  try {
+    const project = await dbProjects.insert(req.body);
+    res.status(201).json(project);
+  } catch (err) {
+    res.status(500).json({ error: 'Unable to process request' });
+  }
+});
+
+router.get('/:id/actions', async (req, res) => {
+    try {
+        const { id } = req.params
+        const actions = await dbProjects.getProjectActions(id);
+        res.status(200).json(actions);
     }catch(err) {
         res.status(500).json({ error: 'Unable to process request' });
     }
